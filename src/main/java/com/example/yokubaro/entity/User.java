@@ -15,12 +15,14 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "login_id")
     private String loginId;
 
     private String password;
 
+    @Column(name = "user_name")
     private String userName;
 }

@@ -1,10 +1,6 @@
 package com.example.yokubaro.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -14,13 +10,19 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 投稿ID
+    @Column(name = "post_Id")
+    private Long postId; // 投稿ID
 
     private String title;  // タイトル
 
     private String body;   // 本文
 
+    @Column(name = "user_Id")
     private Long userId;   // 投稿したユーザーのID（Userのidと合わせるためLong）
 
+    @Column(name = "post_date")
     private String postDate; // 投稿日
+
+    @Column(name = "category_tag")
+    private String categoryTag;
 }
