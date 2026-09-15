@@ -33,4 +33,19 @@ public class PostController {
     public List<Post> getAllPosts() {
         return postService.findAllPosts();
     }
+    // 【新規】動作確認用の更新URL: http://localhost:8080/test-update
+    @GetMapping("/test-update")
+    public String testUpdate() {
+        // 例として、IDが 1 の投稿のタイトルを書き換えてみる
+        postService.updatePost(1L, "【更新！】タイトルが変わりました");
+        return "ID:1 の投稿を更新しました！/posts で確認してね！";
+    }
+
+    // 【新規】動作確認用の削除URL: http://localhost:8080/test-delete
+    @GetMapping("/test-delete")
+    public String testDelete() {
+        // 例として、IDが 2 の投稿を削除してみる
+        postService.deletePost(2L);
+        return "ID:2 の投稿を削除しました！/posts で確認してね！";
+    }
 }
