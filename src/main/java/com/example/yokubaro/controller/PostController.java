@@ -5,6 +5,7 @@ import com.example.yokubaro.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class PostController {
@@ -26,5 +27,10 @@ public class PostController {
         postService.savePost(post);
 
         return "投稿の保存に成功しました！H2コンソールで確認してね！";
+    }
+    // 【新規】全投稿を取得してJSONで返すAPI
+    @GetMapping("/posts")
+    public List<Post> getAllPosts() {
+        return postService.findAllPosts();
     }
 }
