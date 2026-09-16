@@ -28,12 +28,12 @@ public class PostController {
 
         return "投稿の保存に成功しました！H2コンソールで確認してね！";
     }
-    // 【新規】全投稿を取得してJSONで返すAPI
+    // 全投稿を取得してJSONで返すAPI
     @GetMapping("/posts")
     public List<Post> getAllPosts() {
         return postService.findAllPosts();
     }
-    // 【新規】動作確認用の更新URL: http://localhost:8080/test-update
+    // 動作確認用の更新URL: http://localhost:8080/test-update
     @GetMapping("/test-update")
     public String testUpdate() {
         // 例として、IDが 1 の投稿のタイトルを書き換えてみる
@@ -41,7 +41,7 @@ public class PostController {
         return "ID:1 の投稿を更新しました！/posts で確認してね！";
     }
 
-    // 【新規】動作確認用の削除URL: http://localhost:8080/test-delete
+    // 動作確認用の削除URL: http://localhost:8080/test-delete
     @GetMapping("/test-delete")
     public String testDelete() {
         // 例として、IDが 2 の投稿を削除してみる

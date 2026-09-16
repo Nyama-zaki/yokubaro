@@ -16,12 +16,12 @@ public class PostService {
     public void savePost(Post post) {
         postRepository.save(post);
     }
-    // 【新規】すべての投稿を取得するメソッド
+    // すべての投稿を取得するメソッド
     public List<Post> findAllPosts() {
         return postRepository.findAll();
     }
 
-    // 【新規】投稿を更新するメソッド
+    // 投稿を更新するメソッド
     public void updatePost(Long id, String newTitle) {
         // 1. 該当するIDの投稿を探す（見つからなければ例外を投げる）
         Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
@@ -31,7 +31,7 @@ public class PostService {
         postRepository.save(post);
     }
 
-    // 【新規】投稿を削除するメソッド
+    // 投稿を削除するメソッド
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
