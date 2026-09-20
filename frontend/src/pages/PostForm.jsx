@@ -1,40 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 function PostForm() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const navigate = useNavigate();
   const { id } = useParams(); // URLからIDを取得（編集のときだけ存在する）
-
-  // 編集モードかどうかを判定（idがあれば編集）
   const isEditMode = Boolean(id);
 
-  // 編集モードの場合、初期データを読み込む処理
-  useEffect(() => {
-    if (isEditMode) {
-      // 本来はデータベースやAPIから取得しますが、今回は仮のデータを使用
-      const dummyPosts = {
-        1: {
-          title: "ヨクバロの第一歩！",
-          content:
-            "Reactのルーティングができました。画面の切り替えがスムーズで気持ちいいですね。",
-        },
-        2: {
-          title: "ランチの記録",
-          content:
-            "今日のラーメンは美味しかった。次は違う味も試してみたいです。",
-        },
-      };
+  // 仮のデータ（コンポーネントの外、またはuseStateの前に定義）
+  const dummyPosts = {
+    1: {
+      title: "ヨクバロの第一歩！",
+      content:
+        "Reactのルーティングができました。画面の切り替えがスムーズで気持ちいいですね。",
+    },
+    2: {
+      title: "ランチの記録",
+      content: "今日のラーメンは美味しかった。次は違う味も試してみたいです。",
+    },
+  };
 
-      const postToEdit = dummyPosts[id];
-      if (postToEdit) {
-        setTitle(postToEdit.title);
-        setContent(postToEdit.content);
-      }
-    }
-  }, [id, isEditMode]);
+  // 💡 編集モードなら該当データを、新規なら空文字を最初から初期値としてセットする
+  const initialPost = isEditMode
+    ? dummyPosts[id] || { title: "", content: "" }
+    : { title: "", content: "" };
+
+  const [title, setTitle] = useState(initialPost.title);
+  const [content, setContent] = useState(initialPost.content);
+
+  const navigate = useNavigate();
 
   // フォーム送信時の処理
   const handleSubmit = (e) => {
