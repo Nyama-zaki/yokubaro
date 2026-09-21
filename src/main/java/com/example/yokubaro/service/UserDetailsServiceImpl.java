@@ -2,7 +2,7 @@ package com.example.yokubaro.service;
 
 import com.example.yokubaro.entity.User;
 import com.example.yokubaro.repository.UserRepository;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +15,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    // ★フィールドインジェクションの代わりに、コンストラクタで受け取る（推奨される書き方）
     public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
