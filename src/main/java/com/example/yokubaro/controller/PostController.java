@@ -3,11 +3,15 @@ package com.example.yokubaro.controller;
 import com.example.yokubaro.entity.Post;
 import com.example.yokubaro.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api")
 public class PostController {
 
     @Autowired
@@ -48,4 +52,25 @@ public class PostController {
         postService.deletePost(2L);
         return "ID:2 の投稿を削除しました！/posts で確認してね！";
     }
+    // --- 新規登録の窓口 ---
+    @org.springframework.web.bind.annotation.PostMapping("/posts")
+    public Post createPost(@org.springframework.web.bind.annotation.RequestBody Post post) {
+        return postService.savePost(post);
+    }
+
+    // --- 1件詳細取得の窓口 ---
+    @GetMapping("/posts/{id}")
+    public Post getPostById(@org.springframework.web.bind.annotation.PathVariable Long id) {
+        // Service側に該当IDを探すメソッドがある想定です。なければ後で合わせます！
+        return postService.findPostById(id);
+    }
+
+    // --- 更新の窓口 ---
+    @org.springframework.web.bind.annotation.PutMapping("/posts/{id}")
+    public Post updatePost(@org.springframework.web.bind.annotation.PathVariable Long id, @org.springframework.web.bind.annotation.RequestBody Post updatedPost) {
+        // 更新処理の呼び出し
+        postService.updatePost(id, updatedPost.getTitle()); // （必要に応じて content も更新できるように調整します）
+        return updatedPost;
+    }
+
 }

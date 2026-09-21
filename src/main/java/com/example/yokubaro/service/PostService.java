@@ -13,8 +13,8 @@ public class PostService {
     private PostRepository postRepository;
 
     // 投稿を保存するメソッド
-    public void savePost(Post post) {
-        postRepository.save(post);
+    public Post savePost(Post post) {
+        return postRepository.save(post);
     }
     // すべての投稿を取得するメソッド
     public List<Post> findAllPosts() {
@@ -35,4 +35,11 @@ public class PostService {
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
+
+    // 指定したIDの投稿を1件取得するメソッド
+    public Post findPostById(Long id) {
+        // データベースからIDで検索し、見つからない場合はnullを返す（または例外を投げる）
+        return postRepository.findById(id).orElse(null);
+    }
 }
+

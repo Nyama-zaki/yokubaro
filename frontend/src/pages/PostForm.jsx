@@ -1,48 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+// 受付窓口をインポート
+import { apiClient } from "../services/api";
 
 function PostForm() {
   const { id } = useParams(); // URLからIDを取得（編集のときだけ存在する）
   const isEditMode = Boolean(id);
 
-  // 仮のデータ（コンポーネントの外、またはuseStateの前に定義）
-  const dummyPosts = {
-    1: {
-      title: "ヨクバロの第一歩！",
-      content:
-        "Reactのルーティングができました。画面の切り替えがスムーズで気持ちいいですね。",
-    },
-    2: {
-      title: "ランチの記録",
-      content: "今日のラーメンは美味しかった。次は違う味も試してみたいです。",
-    },
-  };
-
-  // 💡 編集モードなら該当データを、新規なら空文字を最初から初期値としてセットする
-  const initialPost = isEditMode
-    ? dummyPosts[id] || { title: "", content: "" }
-    : { title: "", content: "" };
-
-  const [title, setTitle] = useState(initialPost.title);
-  const [content, setContent] = useState(initialPost.content);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(isEditMode); // 編集時はデータ取得までロード中にする
 
   const navigate = useNavigate();
 
-  // フォーム送信時の処理
-  const handleSubmit = (e) => {
+  // 編集モードの場合、画面を開いたときにサーバーから既存データを取得する
+  useEffect(() => {
+    if (isEditMode) {
+      async function fetchPost() {
+        try {
+          const data = await apiClient(`/api/posts/${id}`);
+          setTitle(data.title);
+          setContent(data.content);
+        } catch (error) {
+          console.error("編集データの取得に失敗しました:", error);
+          alert("データの取得に失敗しました。");
+        } finally {
+          setLoading(false);
+        }
+      }
+      fetchPost();
+    }
+  }, [isEditMode, id]);
+
+  // フォーム送信時の処理（新規登録 or 更新）
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isEditMode) {
-      console.log(`ID: ${id} の記事を更新:`, { title, content });
-      alert(`記事「${title}」を更新しました！（※現在は仮の動作です）`);
-    } else {
-      console.log("新規登録:", { title, content });
-      alert(`「${title}」を新規登録しました！（※現在は仮の動作です）`);
-    }
+    try {
+      if (isEditMode) {
+        // 編集（更新）の場合：PUTメソッドでデータを送信
+        await apiClient(`/api/posts/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({ title, content }),
+        });
+        alert(`記事「${title}」を更新しました！`);
+      } else {
+        // 新規登録の場合：POSTメソッドでデータを送信
+        await apiClient("/api/posts", {
+          method: "POST",
+          body: JSON.stringify({ title, content }),
+        });
+        alert(`「${title}」を新規登録しました！`);
+      }
 
-    // 保存後は一覧画面へ戻る
-    navigate("/posts");
+      // 保存後は一覧画面へ戻る
+      navigate("/posts");
+    } catch (error) {
+      console.error("保存処理に失敗しました:", error);
+      alert("保存に失敗しました。入力内容を確認してください。");
+    }
   };
+
+  // 編集モードでデータ読み込み中の表示
+  if (loading) {
+    return <div style={{ padding: "20px" }}>データを読み込み中...</div>;
+  }
 
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
@@ -90,7 +112,7 @@ function PostForm() {
             style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
             required
           />
-          {/* ★クリックすると本文にタグが追加されるチップ一覧 */}
+          {/* クリックすると本文にタグが追加されるチップ一覧 */}
           <div
             style={{
               display: "flex",
