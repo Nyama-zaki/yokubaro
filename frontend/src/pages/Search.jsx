@@ -1,36 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+// 受付窓口をインポート
+import { apiClient } from "../services/api";
 
 function Search() {
   const [keyword, setKeyword] = useState("");
 
-  // ダミーの自分の投稿データ（本文の中に #タグ が含まれている状態を想定）
-  const [allPosts] = useState([
-    {
-      id: 1,
-      title: "Reactの基礎について",
-      content: "今日は #React のコンポーネントとステートを学んだ #備忘録",
-    },
-    {
-      id: 2,
-      title: "アプリ開発の進捗",
-      content: "「ヨクバロ！」の検索画面を作成中 #ヨクバロ #React",
-    },
-    {
-      id: 3,
-      title: "環境構築メモ",
-      content: "Spring Bootとデータベースの連携を確認 #Java #備忘録",
-    },
-  ]);
+  // 1. サーバーから取得した実際の投稿データを入れる箱（最初は空っぽ）
+  const [allPosts, setAllPosts] = useState([]);
 
   const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // ★自分の投稿の本文から「#〇〇」というタグを自動で集めて重複をなくす処理
+  // 2. 画面が開いたときに、バックエンドから全投稿を取得する
+  useEffect(() => {
+    async function fetchAllPosts() {
+      try {
+        const data = await apiClient("/api/posts");
+        setAllPosts(data);
+      } catch (error) {
+        console.error("投稿データの取得に失敗しました:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAllPosts();
+  }, []);
+
+  // ★データベースの投稿本文から「#〇〇」というタグを自動で集めて重複をなくす処理
   const allTags = Array.from(
     new Set(
       allPosts.flatMap((post) => {
-        const matches = post.content.match(/#[^\s#]+/g);
+        // content が null などの場合のエラーを防ぐため (post.content || "") にしています
+        const text = post.content || "";
+        const matches = text.match(/#[^\s#]+/g);
         return matches ? matches : [];
       }),
     ),
@@ -38,11 +43,14 @@ function Search() {
 
   // 実際の検索処理（キーワードやタグが含まれるものをフィルタリング）
   const executeSearch = (searchWord) => {
-    const results = allPosts.filter(
-      (post) =>
-        post.content.toLowerCase().includes(searchWord.toLowerCase()) ||
-        post.title.toLowerCase().includes(searchWord.toLowerCase()),
-    );
+    const results = allPosts.filter((post) => {
+      const title = post.title || "";
+      const content = post.content || "";
+      return (
+        content.toLowerCase().includes(searchWord.toLowerCase()) ||
+        title.toLowerCase().includes(searchWord.toLowerCase())
+      );
+    });
     setSearchResults(results);
     setHasSearched(true);
   };
@@ -59,6 +67,14 @@ function Search() {
     setKeyword(tag);
     executeSearch(tag);
   };
+
+  if (loading) {
+    return (
+      <div style={{ padding: "40px", textAlign: "center" }}>
+        データを読み込み中...
+      </div>
+    );
+  }
 
   return (
     <div style={{ maxWidth: "600px", margin: "40px auto", padding: "20px" }}>
@@ -100,7 +116,7 @@ function Search() {
         </button>
       </form>
 
-      {/* ★検索窓の下に、自分の投稿から抽出したタグチップを表示するエリア */}
+      {/* ★検索窓の下に、実際の投稿から抽出したタグチップを表示するエリア */}
       {allTags.length > 0 && (
         <div
           style={{
@@ -175,6 +191,7 @@ function Search() {
                       color: "#666",
                       margin: "8px 0 0 0",
                       fontSize: "14px",
+                      whiteSpace: "pre-wrap",
                     }}
                   >
                     {post.content}
