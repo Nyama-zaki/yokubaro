@@ -2,19 +2,42 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [loginId, setLoginId] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 実際の登録処理（API通信など）はここに書いていきます
-    console.log("登録データ:", { username, email, password });
+    setErrorMessage("");
 
-    // 登録完了を想定して、一旦トップページ（またはログイン画面）へ飛ばす例
-    alert("ユーザー登録が完了しました！（ダミー）");
-    navigate("/");
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          loginId: loginId,
+          password: password,
+          userName: userName,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("ユーザー登録成功！");
+        alert("ユーザー登録が完了しました！");
+        navigate("/login");
+      } else {
+        setErrorMessage(
+          "登録に失敗しました。すでに使われているIDかもしれません。",
+        );
+      }
+    } catch (error) {
+      console.error("通信エラー:", error);
+      setErrorMessage("サーバーとの通信に失敗しました。");
+    }
   };
 
   return (
@@ -29,8 +52,21 @@ function Register() {
       }}
     >
       <h2 style={{ textAlign: "center", marginBottom: "25px", color: "#333" }}>
-        ユーザー登録
+        新規登録
       </h2>
+
+      {errorMessage && (
+        <div
+          style={{
+            color: "red",
+            marginBottom: "15px",
+            fontSize: "14px",
+            textAlign: "center",
+          }}
+        >
+          {errorMessage}
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit}
@@ -46,41 +82,13 @@ function Register() {
               color: "#333",
             }}
           >
-            ユーザー名
+            ユーザーID
           </label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={loginId}
+            onChange={(e) => setLoginId(e.target.value)}
             placeholder="例: yokubaro_user"
-            required
-            style={{
-              width: "100%",
-              padding: "10px",
-              boxSizing: "border-box",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-          />
-        </div>
-
-        <div>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold",
-              fontSize: "14px",
-              color: "#333",
-            }}
-          >
-            メールアドレス
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="例: example@email.com"
             required
             style={{
               width: "100%",
@@ -120,6 +128,34 @@ function Register() {
           />
         </div>
 
+        <div>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontWeight: "bold",
+              fontSize: "14px",
+              color: "#333",
+            }}
+          >
+            ユーザーニックネーム
+          </label>
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder="例: よくばろ太郎"
+            required
+            style={{
+              width: "100%",
+              padding: "10px",
+              boxSizing: "border-box",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+            }}
+          />
+        </div>
+
         <button
           type="submit"
           style={{
@@ -148,7 +184,7 @@ function Register() {
             fontWeight: "bold",
           }}
         >
-          ログインはこちら
+          ログイン画面へ戻る
         </Link>
       </div>
     </div>
