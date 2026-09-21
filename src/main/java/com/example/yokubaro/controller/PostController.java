@@ -22,7 +22,7 @@ public class PostController {
     public String testCreate() {
         Post post = new Post();
         post.setTitle("コントローラーからの投稿");
-        post.setBody("ServiceとController経由で保存できたよ！");
+        post.setContent("ServiceとController経由で保存できたよ！");
         post.setUserId(1L);
         post.setPostDate("2026-09-15");
         post.setCategoryTag("テスト");

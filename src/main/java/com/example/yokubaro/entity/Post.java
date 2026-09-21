@@ -11,11 +11,11 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_Id")
-    private Long postId; // 投稿ID
+    private Long id; // 投稿ID
 
     private String title;  // タイトル
 
-    private String body;   // 本文
+    private String content;   // 本文
 
     @Column(name = "user_Id")
     private Long userId;   // 投稿したユーザーのID（Userのidと合わせるためLong）
