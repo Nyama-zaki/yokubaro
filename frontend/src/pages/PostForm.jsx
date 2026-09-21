@@ -9,28 +9,48 @@ function PostForm() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(isEditMode); // 編集時はデータ取得までロード中にする
+
+  // 1. サーバーから取得した全投稿データ（タグを自動抽出するため）
+  const [allPosts, setAllPosts] = useState([]);
+  const [loading, setLoading] = useState(true); // 初期ロードはデータ取得を待つようにする
 
   const navigate = useNavigate();
 
-  // 編集モードの場合、画面を開いたときにサーバーから既存データを取得する
+  // 2. 画面を開いたときに、投稿一覧（タグ用）と、編集時は既存データを同時に取得する
   useEffect(() => {
-    if (isEditMode) {
-      async function fetchPost() {
-        try {
-          const data = await apiClient(`/api/posts/${id}`);
-          setTitle(data.title);
-          setContent(data.content);
-        } catch (error) {
-          console.error("編集データの取得に失敗しました:", error);
-          alert("データの取得に失敗しました。");
-        } finally {
-          setLoading(false);
+    async function fetchData() {
+      try {
+        // タグ抽出用に全件データを取得
+        const postsData = await apiClient("/api/posts");
+        setAllPosts(postsData);
+
+        // 編集モードの場合は、編集対象のデータも取得する
+        if (isEditMode) {
+          const editData = await apiClient(`/api/posts/${id}`);
+          setTitle(editData.title);
+          setContent(editData.content);
         }
+      } catch (error) {
+        console.error("データの取得に失敗しました:", error);
+        alert("データの取得に失敗しました。");
+      } finally {
+        setLoading(false);
       }
-      fetchPost();
     }
+
+    fetchData();
   }, [isEditMode, id]);
+
+  // ★データベースの投稿本文から「#〇〇」というタグを自動で集めて重複をなくす処理
+  const allTags = Array.from(
+    new Set(
+      allPosts.flatMap((post) => {
+        const text = post.content || "";
+        const matches = text.match(/#[^\s#]+/g);
+        return matches ? matches : [];
+      }),
+    ),
+  );
 
   // フォーム送信時の処理（新規登録 or 更新）
   const handleSubmit = async (e) => {
@@ -61,7 +81,7 @@ function PostForm() {
     }
   };
 
-  // 編集モードでデータ読み込み中の表示
+  // データ読み込み中の表示
   if (loading) {
     return <div style={{ padding: "20px" }}>データを読み込み中...</div>;
   }
@@ -112,41 +132,45 @@ function PostForm() {
             style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
             required
           />
-          {/* クリックすると本文にタグが追加されるチップ一覧 */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "6px",
-              marginTop: "8px",
-              marginBottom: "15px",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: "12px", color: "#666" }}>
-              よく使うタグを追加:
-            </span>
-            {["#React", "#備忘録", "#ヨクバロ", "#Java"].map((tag, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() =>
-                  setContent((prev) => prev + (prev ? " " : "") + tag)
-                }
-                style={{
-                  background: "#f1f3f5",
-                  color: "#495057",
-                  border: "1px solid #ced4da",
-                  borderRadius: "12px",
-                  padding: "2px 10px",
-                  fontSize: "12px",
-                  cursor: "pointer",
-                }}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
+
+          {/* ★クリックすると本文にタグが追加されるチップ一覧（動的に生成） */}
+          {allTags.length > 0 && (
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "6px",
+                marginTop: "8px",
+                marginBottom: "15px",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ fontSize: "12px", color: "#666" }}>
+                登録済みのタグを追加:
+              </span>
+              {allTags.map((tag, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() =>
+                    setContent((prev) => prev + (prev ? " " : "") + tag)
+                  }
+                  style={{
+                    background: "#b8c5c4",
+                    color: "#00796b",
+                    border: "1px solid #20b2aa",
+                    borderRadius: "12px",
+                    padding: "2px 10px",
+                    fontSize: "12px",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div style={{ display: "flex", gap: "10px" }}>
