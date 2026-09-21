@@ -12,28 +12,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // パスワードを安全にハッシュ化するエンコーダーの定義
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // セキュリティの細かいルール（どのページにアクセスできるか等）を設定
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // CSRF無効化
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/login", "/api/register").permitAll() // ログイン用URLは誰でもアクセスOKにする
-                        .anyRequest().permitAll() // 他のページも一旦自由に
+                        // ログイン・登録だけでなく、自作のログアウトAPI("/api/logout")もアクセス許可します
+                        .requestMatchers("/api/login", "/api/register", "/api/user/me", "/api/logout").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
-                        .loginProcessingUrl("/api/login") // ReactからこのURLにPOSTを送るとJavaが自動でログイン処理してくれます
+                        .loginProcessingUrl("/api/login")
                         .successHandler((request, response, authentication) -> {
-                            response.setStatus(200); // ログイン成功したらステータス200を返す
+                            response.setStatus(200);
                         })
                         .failureHandler((request, response, exception) -> {
-                            response.setStatus(401); // ログイン失敗したら401（認証エラー）を返す
+                            response.setStatus(401);
                         })
                 );
 

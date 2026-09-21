@@ -28,8 +28,8 @@ export default function Login() {
 
       if (response.ok) {
         console.log("ログイン成功！");
-        // ログイン成功したら投稿一覧やホーム画面へジャンプ
-        navigate("/");
+        // ブラウザ全体をリロードしながらトップ画面へ移動する
+        window.location.href = "/";
       } else {
         setErrorMessage("ログインIDまたはパスワードが間違っています。");
       }

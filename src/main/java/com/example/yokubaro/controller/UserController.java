@@ -5,6 +5,11 @@ import com.example.yokubaro.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -18,7 +23,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // リクエストボディを受け取るための入れ物（DTO）
     public static class RegisterRequest {
         public String loginId;
         public String password;
@@ -27,21 +31,40 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
-        // 1. すでに同じログインIDが存在するかチェック
         if (userRepository.existsByLoginId(request.loginId)) {
             return ResponseEntity.badRequest().body("このログインIDはすでに使用されています。");
         }
 
-        // 2. ユーザーエンティティを作成
         User user = new User();
         user.setLoginId(request.loginId);
-        // パスワードをハッシュ化して保存！
         user.setPassword(passwordEncoder.encode(request.password));
         user.setUserName(request.userName);
 
-        // 3. データベースに保存
         userRepository.save(user);
 
         return ResponseEntity.ok("ユーザー登録が成功しました！");
+    }
+
+    @GetMapping("/user/me")
+    public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(401).body("ログインしていません");
+        }
+        User user = userRepository.findByLoginId(userDetails.getUsername()).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(404).body("ユーザーが見つかりません");
+        }
+
+        return ResponseEntity.ok(Map.of("userName", user.getUserName()));
+    }
+
+    // ログアウト用の処理
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // セッションを破壊してログアウト状態にする
+        }
+        return ResponseEntity.ok("ログアウトしました");
     }
 }
