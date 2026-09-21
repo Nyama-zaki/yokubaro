@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF無効化
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/login").permitAll() // ログイン用URLは誰でもアクセスOKにする
+                        .requestMatchers("/api/login", "/api/register").permitAll() // ログイン用URLは誰でもアクセスOKにする
                         .anyRequest().permitAll() // 他のページも一旦自由に
                 )
                 .formLogin(form -> form

@@ -17,7 +17,7 @@ function Top() {
           color: "#666",
           fontSize: "16px",
           lineHeight: "1.6",
-          marginBottom: "30px",
+          marginBottom: "25px",
         }}
       >
         WEBで使えるあなただけのメモ！
@@ -26,6 +26,46 @@ function Top() {
         <br />
         好きなものを自由に詰め込もう！
       </p>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "15px",
+          marginBottom: "30px",
+        }}
+      >
+        <Link
+          to="/register"
+          style={{
+            backgroundColor: "#20b2aa",
+            color: "#fff",
+            padding: "10px 25px",
+            borderRadius: "4px",
+            textDecoration: "none",
+            fontWeight: "bold",
+            fontSize: "15px",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          }}
+        >
+          新規会員登録
+        </Link>
+        <Link
+          to="/login"
+          style={{
+            backgroundColor: "#fff",
+            color: "#20b2aa",
+            border: "2px solid #20b2aa",
+            padding: "10px 25px",
+            borderRadius: "4px",
+            textDecoration: "none",
+            fontWeight: "bold",
+            fontSize: "15px",
+          }}
+        >
+          ログイン
+        </Link>
+      </div>
 
       {/* 操作の案内 */}
       <div
@@ -38,11 +78,11 @@ function Top() {
         }}
       >
         <p style={{ color: "#495057", fontSize: "14px", margin: 0 }}>
-          👆 上のメニューボタンから操作してください
+          👆 上のメニューボタンからも操作できます
         </p>
       </div>
 
-      {/* ★お知らせスペース（後から変えやすいように枠にしておく） */}
+      {/* お知らせスペース */}
       <div
         style={{
           background: "#e0f2f1",
