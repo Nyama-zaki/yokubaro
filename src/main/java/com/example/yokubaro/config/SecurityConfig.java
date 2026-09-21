@@ -22,11 +22,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // 今回は簡単のためCSRF保護を一旦無効化（API通信をしやすくするため）
+                .csrf(csrf -> csrf.disable()) // CSRF無効化
                 .authorizeHttpRequests(auth -> auth
-                        // ログインやお知らせ、投稿一覧など、誰でもアクセスできるようにしたいAPIのパスがあればここに書きます
-                        // 例: .requestMatchers("/api/posts", "/api/login").permitAll()
-                        .anyRequest().permitAll() // まずは一旦すべてのリクエストを許可して動かしやすくする場合の設定
+                        .requestMatchers("/api/login").permitAll() // ログイン用URLは誰でもアクセスOKにする
+                        .anyRequest().permitAll() // 他のページも一旦自由に
+                )
+                .formLogin(form -> form
+                        .loginProcessingUrl("/api/login") // ReactからこのURLにPOSTを送るとJavaが自動でログイン処理してくれます
+                        .successHandler((request, response, authentication) -> {
+                            response.setStatus(200); // ログイン成功したらステータス200を返す
+                        })
+                        .failureHandler((request, response, exception) -> {
+                            response.setStatus(401); // ログイン失敗したら401（認証エラー）を返す
+                        })
                 );
 
         return http.build();
