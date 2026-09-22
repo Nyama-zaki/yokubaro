@@ -21,13 +21,14 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    // 投稿を更新するメソッド
-    public void updatePost(Long id, String newTitle) {
-        // 1. 該当するIDの投稿を探す（見つからなければ例外を投げる）
+    // 投稿を更新するメソッド（タイトルと本文の両方を更新）
+    public void updatePost(Long id, String newTitle, String newContent) {
+        // 1. 該当するIDの投稿を探す
         Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
-        // 2. タイトルを書き換える
+        // 2. タイトルと本文を書き換える
         post.setTitle(newTitle);
-        // 3. saveすると同じIDなので上書き（更新）される
+        post.setContent(newContent);
+        // 3. 保存
         postRepository.save(post);
     }
 

@@ -41,7 +41,7 @@ function PostForm() {
     fetchData();
   }, [isEditMode, id]);
 
-  // ★データベースの投稿本文から「#〇〇」というタグを自動で集めて重複をなくす処理
+  // データベースの投稿本文から「#〇〇」というタグを自動で集めて重複をなくす処理
   const allTags = Array.from(
     new Set(
       allPosts.flatMap((post) => {
