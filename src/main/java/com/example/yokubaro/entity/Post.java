@@ -23,6 +23,4 @@ public class Post {
     @Column(name = "post_date")
     private String postDate; // 投稿日
 
-    @Column(name = "category_tag")
-    private String categoryTag;
-}
+ }

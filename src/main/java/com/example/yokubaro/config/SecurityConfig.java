@@ -21,9 +21,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
+                )
                 .authorizeHttpRequests(auth -> auth
                         // ログイン・登録だけでなく、自作のログアウトAPI("/api/logout")もアクセス許可します
-                        .requestMatchers("/api/login", "/api/register", "/api/user/me", "/api/logout").permitAll()
+                        .requestMatchers("/api/login", "/api/register", "/api/user/me", "/api/logout","/h2-console/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
