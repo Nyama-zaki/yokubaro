@@ -7,7 +7,10 @@
 
 ## アプリケーションの画面イメージ
 
-_(ここにアプリのスクリーンショット画像を3〜5枚ほど貼ると効果的です)_
+<img width="1420" height="792" alt="Image" src="https://github.com/user-attachments/assets/a2024e32-263a-4537-b830-8ea0569db7a8" />
+<img width="1413" height="702" alt="Image" src="https://github.com/user-attachments/assets/6a990ac5-50ba-4b54-a061-10447c8714ca" />
+<img width="1417" height="784" alt="Image" src="https://github.com/user-attachments/assets/05f22247-3810-48ea-b019-c31a66c7f23d" />
+<img width="1412" height="778" alt="Image" src="https://github.com/user-attachments/assets/d6d44ece-d5d1-4458-ab8f-f95895057d25" />
 
 - 投稿一覧画面
 - 投稿詳細・編集画面
@@ -85,7 +88,7 @@ erDiagram
 
 1. リポジトリのクローン
    Bash
-   git clone [https://github.com/あなたのユーザー名/yokubaro.git](https://github.com/あなたのユーザー名/yokubaro.git)
+   git clone [https://github.com/Nyama-zaki/yokubaro.git](https://github.com/Nyama-zaki/yokubaro.git)
    cd yokubaro
 
 2. バックエンド（Spring Boot）の起動
