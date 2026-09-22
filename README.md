@@ -66,7 +66,6 @@ erDiagram
         Long id PK "投稿ID"
         String title "タイトル"
         String content "本文"
-        String categoryTag "タグ"
         Long userId "ユーザーID (FK)"
     }
 ```
@@ -99,3 +98,8 @@ erDiagram
    npm install
    npm run dev
    ポート番号: 5173 （ブラウザで http://localhost:5173 にアクセス）
+
+### テスト用アカウント
+
+- **ユーザーID**　test_user_001
+- **パスワード**　123456az
