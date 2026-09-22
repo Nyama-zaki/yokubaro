@@ -8,12 +8,15 @@
 ## アプリケーションの画面イメージ
 
 <img width="1420" height="792" alt="Image" src="https://github.com/user-attachments/assets/a2024e32-263a-4537-b830-8ea0569db7a8" />
-<img width="1413" height="702" alt="Image" src="https://github.com/user-attachments/assets/6a990ac5-50ba-4b54-a061-10447c8714ca" />
-<img width="1417" height="784" alt="Image" src="https://github.com/user-attachments/assets/05f22247-3810-48ea-b019-c31a66c7f23d" />
-<img width="1412" height="778" alt="Image" src="https://github.com/user-attachments/assets/d6d44ece-d5d1-4458-ab8f-f95895057d25" />
+Topページ
 
+<img width="1413" height="702" alt="Image" src="https://github.com/user-attachments/assets/6a990ac5-50ba-4b54-a061-10447c8714ca" />
+- 新規投稿画面
+
+<img width="1417" height="784" alt="Image" src="https://github.com/user-attachments/assets/05f22247-3810-48ea-b019-c31a66c7f23d" />
 - 投稿一覧画面
-- 投稿詳細・編集画面
+
+<img width="1412" height="778" alt="Image" src="https://github.com/user-attachments/assets/d6d44ece-d5d1-4458-ab8f-f95895057d25" />
 - 新規投稿画面（タグチップ機能）
 
 ## 開発した背景・こだわり
