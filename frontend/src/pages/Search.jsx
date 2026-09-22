@@ -29,7 +29,7 @@ function Search() {
     fetchAllPosts();
   }, []);
 
-  // ★データベースの投稿本文から「#〇〇」というタグを自動で集めて重複をなくす処理
+  // データベースの投稿本文から「#〇〇」というタグを自動で集めて重複をなくす処理
   const allTags = Array.from(
     new Set(
       allPosts.flatMap((post) => {
@@ -62,7 +62,7 @@ function Search() {
     executeSearch(keyword);
   };
 
-  // ★タグチップをクリックしたときの処理
+  // タグチップをクリックしたときの処理
   const handleTagClick = (tag) => {
     setKeyword(tag);
     executeSearch(tag);
@@ -78,7 +78,7 @@ function Search() {
 
   return (
     <div style={{ maxWidth: "600px", margin: "40px auto", padding: "20px" }}>
-      <h2 style={{ marginBottom: "20px", color: "#333" }}>投稿記事検索</h2>
+      <h2 style={{ marginBottom: "20px", color: "#ccc" }}>投稿記事検索</h2>
 
       {/* 検索フォーム */}
       <form
