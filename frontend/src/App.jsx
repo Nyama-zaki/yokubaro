@@ -7,6 +7,7 @@ import PostDetail from "./pages/PostDetail";
 import PostForm from "./pages/PostForm";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -16,12 +17,49 @@ function App() {
         <Routes>
           <Route path="/" element={<Top />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/posts" element={<PostList />} />
-          <Route path="/posts/new" element={<PostForm />} />
-          <Route path="/posts/:id" element={<PostDetail />} />
-          <Route path="/posts/:id/edit" element={<PostForm />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/search" element={<Search />} />
+
+          {/* 🔒 ログインしていないと入れないようにガードするページ */}
+          <Route
+            path="/posts"
+            element={
+              <ProtectedRoute>
+                <PostList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/posts/new"
+            element={
+              <ProtectedRoute>
+                <PostForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/posts/:id"
+            element={
+              <ProtectedRoute>
+                <PostDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/posts/:id/edit"
+            element={
+              <ProtectedRoute>
+                <PostForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <ProtectedRoute>
+                <Search />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
