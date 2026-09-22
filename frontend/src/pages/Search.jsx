@@ -175,6 +175,20 @@ function Search() {
                     background: "#fff",
                   }}
                 >
+                  {/* 「記事ID」と「投稿日時」を左右に配置 */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontSize: "12px",
+                      color: "#666",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    <span>記事ID: {post.id}</span>
+                    <span>投稿日時: {post.postDate}</span>
+                  </div>
+
                   <Link
                     to={`/posts/${post.id}`}
                     style={{

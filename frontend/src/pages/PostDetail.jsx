@@ -33,7 +33,7 @@ function PostDetail() {
     fetchPostDetail();
   }, [id]);
 
-  // ★削除を実行する関数
+  // 削除を実行する
   const handleDelete = async () => {
     try {
       await apiClient(`/api/posts/${id}`, {
@@ -106,9 +106,20 @@ function PostDetail() {
           background: "#fff",
         }}
       >
-        <span style={{ fontSize: "12px", color: "#333" }}>
-          記事ID: {post.id}
-        </span>
+        {/* 記事IDと投稿日時を左右に配置 */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: "12px",
+            color: "#333",
+            marginBottom: "10px",
+          }}
+        >
+          <span>記事ID: {post.id}</span>
+          <span>投稿日時: {post.postDate}</span>
+        </div>
+
         <h2 style={{ marginTop: "10px", marginBottom: "15px", color: "#666" }}>
           {post.title}
         </h2>

@@ -5,6 +5,8 @@ import com.example.yokubaro.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +33,14 @@ public class PostController {
     // --- 新規登録 ---
     @PostMapping("/posts")
     public Post createPost(@RequestBody Post post) {
+        // 現在の日時を取得し、24H表記の文字列にフォーマット
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        String formattedDate = now.format(formatter);
+
+        // 投稿オブジェクトに日付をセット
+        post.setPostDate(formattedDate);
+
         return postService.savePost(post);
     }
 

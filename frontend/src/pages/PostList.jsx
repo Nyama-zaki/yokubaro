@@ -56,8 +56,24 @@ function PostList() {
                   borderRadius: "8px",
                 }}
               >
-                <h3>{post.title}</h3>
-                <p>{post.content}</p>
+                {/* 「記事ID」と「投稿日時」を左右に配置 */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "12px",
+                    color: "#666",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <span>記事ID: {post.id}</span>
+                  <span>投稿日時: {post.postDate}</span>
+                </div>
+
+                {/* タイトルは下に配置 */}
+                <h3 style={{ margin: "0 0 10px 0" }}>{post.title}</h3>
+                <p style={{ margin: "0 0 10px 0" }}>{post.content}</p>
+
                 {/* 詳細画面へのリンク（IDを渡す） */}
                 <Link to={`/posts/${post.id}`}>
                   <span
