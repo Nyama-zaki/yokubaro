@@ -78,7 +78,7 @@ function Top() {
         }}
       >
         <p style={{ color: "#495057", fontSize: "14px", margin: 0 }}>
-          👆 上のメニューボタンからも操作できます
+          👆 上のメニューボタンから操作できます
         </p>
       </div>
 

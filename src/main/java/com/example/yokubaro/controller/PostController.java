@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -41,9 +42,11 @@ public class PostController {
         return updatedPost;
     }
 
-    // --- 削除 ---
+// --- 削除 ---
     @DeleteMapping("/posts/{id}")
-    public void deletePost(@PathVariable Long id) {
+    public Map<String, String> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
+        // JSON形式のデータ（Map）を返す
+        return Map.of("message", "Deleted successfully");
     }
 }
