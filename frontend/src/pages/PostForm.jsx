@@ -29,6 +29,10 @@ function PostForm() {
           const editData = await apiClient(`/api/posts/${id}`);
           setTitle(editData.title);
           setContent(editData.content);
+        } else {
+          // 新規作成モードのときはフォームを綺麗に空っぽにする
+          setTitle("");
+          setContent("");
         }
       } catch (error) {
         console.error("データの取得に失敗しました:", error);
@@ -133,7 +137,7 @@ function PostForm() {
             required
           />
 
-          {/* ★クリックすると本文にタグが追加されるチップ一覧（動的に生成） */}
+          {/* クリックすると本文にタグが追加されるチップ一覧 */}
           {allTags.length > 0 && (
             <div
               style={{

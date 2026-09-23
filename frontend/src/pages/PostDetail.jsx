@@ -70,10 +70,10 @@ function PostDetail() {
         </div>
         <div
           style={{
-            border: "1px solid #666",
+            border: "1px solid #333",
             padding: "20px",
             borderRadius: "8px",
-            background: "#fff",
+            background: "#dcdcdc",
           }}
         >
           <span style={{ fontSize: "12px", color: "#333" }}>記事ID: {id}</span>
@@ -100,10 +100,10 @@ function PostDetail() {
 
       <div
         style={{
-          border: "1px solid #666",
+          border: "1px solid #333",
           padding: "20px",
           borderRadius: "8px",
-          background: "#fff",
+          background: "#dcdcdc",
         }}
       >
         {/* 記事IDと投稿日時を左右に配置 */}

@@ -144,7 +144,7 @@ function Register() {
             type="text"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            placeholder="例: よくばろ太郎"
+            placeholder="例: オーイニ　ヨクバロ"
             required
             style={{
               width: "100%",

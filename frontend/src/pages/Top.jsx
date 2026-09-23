@@ -14,7 +14,7 @@ function Top() {
       <h1 style={{ color: "#20b2aa", marginBottom: "10px" }}>ヨクバロ！</h1>
       <p
         style={{
-          color: "#666",
+          color: "#888",
           fontSize: "16px",
           lineHeight: "1.6",
           marginBottom: "25px",
@@ -22,9 +22,9 @@ function Top() {
       >
         WEBで使えるあなただけのメモアプリです。
         <br />
-        日記、推し活、コレクションの記録、レシピなどなど…
+        日記、推し活、コレクションの記録、レシピ、食べ歩き記録などなど…
         <br />
-        好きなものを自由に詰め込もう！
+        好きなものや日々の記録を自由に詰め込もう！
       </p>
 
       <div
@@ -70,7 +70,7 @@ function Top() {
       {/* 操作の案内 */}
       <div
         style={{
-          background: "#f8f9fa",
+          background: "#f5f5f5",
           padding: "15px",
           borderRadius: "8px",
           marginBottom: "30px",

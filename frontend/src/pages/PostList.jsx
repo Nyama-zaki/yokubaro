@@ -62,7 +62,7 @@ function PostList() {
                     display: "flex",
                     justifyContent: "space-between",
                     fontSize: "12px",
-                    color: "#666",
+                    color: "#999",
                     marginBottom: "8px",
                   }}
                 >
@@ -71,8 +71,12 @@ function PostList() {
                 </div>
 
                 {/* タイトルは下に配置 */}
-                <h3 style={{ margin: "0 0 10px 0" }}>{post.title}</h3>
-                <p style={{ margin: "0 0 10px 0" }}>{post.content}</p>
+                <h3 style={{ margin: "0 0 10px 0", color: "#999" }}>
+                  {post.title}
+                </h3>
+                <p style={{ margin: "0 0 10px 0", color: "#888" }}>
+                  {post.content}
+                </p>
 
                 {/* 詳細画面へのリンク（IDを渡す） */}
                 <Link to={`/posts/${post.id}`}>
