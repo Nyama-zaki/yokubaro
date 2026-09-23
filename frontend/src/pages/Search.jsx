@@ -33,7 +33,7 @@ function Search() {
   const allTags = Array.from(
     new Set(
       allPosts.flatMap((post) => {
-        // content が null などの場合のエラーを防ぐため (post.content || "") にしています
+        // content が null などの場合のエラーを防ぐための (post.content || "")
         const text = post.content || "";
         const matches = text.match(/#[^\s#]+/g);
         return matches ? matches : [];
@@ -116,7 +116,7 @@ function Search() {
         </button>
       </form>
 
-      {/* ★検索窓の下に、実際の投稿から抽出したタグチップを表示するエリア */}
+      {/* 検索窓の下に、実際の投稿から抽出したタグチップを表示するエリア */}
       {allTags.length > 0 && (
         <div
           style={{

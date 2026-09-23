@@ -78,7 +78,7 @@ function Top() {
         }}
       >
         <p style={{ color: "#495057", fontSize: "14px", margin: 0 }}>
-          👆 上のメニューボタンから操作できます
+          ↑上のメニューボタンから操作できます
         </p>
       </div>
 
@@ -93,7 +93,7 @@ function Top() {
         }}
       >
         <h3 style={{ color: "#00796b", fontSize: "15px", margin: "0 0 8px 0" }}>
-          📢 お知らせ
+          ◆お知らせ
         </h3>
         <p
           style={{
@@ -104,6 +104,8 @@ function Top() {
           }}
         >
           ・検索画面に「よく使うタグ機能」を追加しました。
+          <br />
+          ・提出します！よろしくお願いいたします。
           <br />
         </p>
       </div>

@@ -9,14 +9,14 @@ export default function Login() {
     e.preventDefault();
     setErrorMessage("");
 
-    // Spring Securityの標準ログインは通常フォームデータ（x-www-form-urlencoded）形式で受け付けます
+    // Spring Securityの標準ログインは通常フォームデータ（x-www-form-urlencoded）形式で受け付け
     const formData = new URLSearchParams();
-    formData.append("username", loginId); // Spring Securityのデフォルトは 'username' という名前で受け取ります
+    formData.append("username", loginId); // Spring Securityのデフォルトは 'username' という名前で受け取り
     formData.append("password", password);
 
     try {
       const response = await fetch("/api/login", {
-        // バックエンドのエンドポイントに合わせて調整してください
+        // バックエンドのエンドポイントに合わせて調整
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

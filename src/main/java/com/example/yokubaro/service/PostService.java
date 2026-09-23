@@ -12,7 +12,7 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    // ★変更：指定したユーザーIDの投稿だけを取得する
+    // 指定したユーザーIDの投稿だけを取得する
     public List<Post> findPostsByUserId(Long userId) {
         return postRepository.findByUserId(userId);
     }

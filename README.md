@@ -1,13 +1,17 @@
-# ヨクバロ (YOKUBARO) 欲張りに生きる人のためのプライベートログ！
+# ヨクバロ！ ＿ 欲張りに生きる人のためのプライベートログ！
 
 ## アプリケーションの概要
 
 「ヨクバロ」は、日々の「思い出す前提のメモ」やアイデアなどをハッシュタグ付きで手軽に投稿・管理できる、シンプルで使いやすいWebアプリケーションです。
 本文中に `#タグ名` を含めるだけで自動的にタグが抽出され、ワンクリックで呼び出せる便利な機能を備えています。
 
+## アプリケーションのURL
+
+[GitHubリポジトリ (yokubaro)](https://github.com/Nyama-zaki/yokubaro)
+
 ## アプリケーションの画面イメージ
 
-<img width="1420" height="792" alt="Image" src="https://github.com/user-attachments/assets/a2024e32-263a-4537-b830-8ea0569db7a8" />
+<img width="1436" height="781" alt="Image" src="https://github.com/user-attachments/assets/c8ec12b1-a2a7-4af0-b894-1023cd00ccb4" />
 ↑Topページ
 
 <img width="1413" height="702" alt="Image" src="https://github.com/user-attachments/assets/6a990ac5-50ba-4b54-a061-10447c8714ca" />
@@ -109,11 +113,10 @@ erDiagram
    npm run dev
    ポート番号: 5173 （ブラウザで http://localhost:5173 にアクセス）
 
-### テスト用アカウント
+### テスト用アカウント(起動時、自動的に3件の記事が登録されています。)
 
 - **ユーザーID**　test_user_001
 - **パスワード**　123456az
-  　※起動時に自動的に3件の記事が登録されています。
 
 ## 将来の展望
 

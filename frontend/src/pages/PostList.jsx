@@ -25,7 +25,7 @@ function PostList() {
     }
 
     fetchPosts();
-  }, []); // 最後の空の配列 `[]` により、「最初に画面が開いたとき1回だけ動く」ルールになります
+  }, []); // 最後の空の配列 `[]` により、「最初に画面が開いたとき1回だけ動く」ルール
 
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>

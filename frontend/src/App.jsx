@@ -19,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* 🔒 ログインしていないと入れないようにガードするページ */}
+          {/* ログインしていないと入れないようにガードするページ */}
           <Route
             path="/posts"
             element={
